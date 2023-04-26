@@ -4,42 +4,65 @@ public class SacarDeterminanteMatriz {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[][] matrizOriginal = {
+        int[][] matrizDefault = {   // declaramos la matriz por defecto y tamaño (3x3)
                                 {2,0,3},
                                 {-1,3,5},
                                 {-2,1,4} 
-                                }; // declaramos el arreglo con valores ya definidos
+                                }; 
 
-        System.out.println("\n PROGRAMA PARA SACAR LA DETERMINANTE DE UNA MATRIZ 3x3\n");
-        //int[][] matrizOriginal = new int[3][3];     // 3x3
+        int [][] matrizOriginal;    // matriz sin definir tamaño, solo inicializada
 
-        /*
-        // INGRESANDO LA MATRIZ
-        System.out.println(" Ingrese los elementos de la matriz (todo de corrido) ");
-        for (int x = 0; x < matrizOriginal.length; x++) {
-            for (int y = 0; y < matrizOriginal.length; y++) {
-                System.out.print(" -> ");
-                matrizOriginal[x][y] = sc.nextInt();
-            }
-        } */
-        
-        // IMPRIMIENDO LA MATRIZ INGRESADA
-        System.out.println("\n IMPRIMIENDO LA MATRIZ: \n");
-        for (int x = 0; x < matrizOriginal.length; x++) {
-            for (int y = 0; y < matrizOriginal.length; y++) {
-                if ( x ==1 && y ==0 ) {
-                    System.out.print(" C =\t[" + matrizOriginal[x][y] + "]\t");
-                }else{
-                    System.out.print("\t[" + matrizOriginal[x][y] + "]\t");
-                }
-            }
+        System.out.println("\n PROGRAMA PARA OBTENER LA DETERMINANTE DE UNA MATRIZ 3x3\n");
+
+        // VALIDANDO OPCION
+        int opc=0;
+        while (opc != 1 && opc != 2) {
+            System.out.print("  [1] -> Cargar matriz manualmente \n  [2] -> Usar una por defecto\n      -> ");
+            opc = sc.nextInt();
             System.out.println();
         }
 
-        System.out.print("\n Seleccione una FILA para sacar la Determinante: ");
-        int selecFilaAdj = sc.nextInt()-1;
-        sc.close();     // cierro el scanner pq sino me tira una advertencia
+        // 
+        if (opc == 1) {
+            matrizOriginal = new int[3][3];     // 3x3
+            // CARGANDO LA MATRIZ
+            System.out.println(" Ingrese los elementos de la matriz (todo de corrido) ");
+            for (int x = 0; x < matrizOriginal.length; x++) {
+                for (int y = 0; y < matrizOriginal.length; y++) {
+                    System.out.print(" -> ");
+                    matrizOriginal[x][y] = sc.nextInt();
+                }
+            } 
+        } else {    // opc == 2
+            matrizOriginal = matrizDefault;     // la matriz a utilizar será la default
+        }
+        int selecFilaAdj;       // defino la variable de la fila a elegir
 
+        while (true) {
+            // IMPRIMIENDO LA MATRIZ INGRESADA
+            System.out.println("\n IMPRIMIENDO LA MATRIZ: \n");
+            for (int x = 0; x < matrizOriginal.length; x++) {
+                for (int y = 0; y < matrizOriginal.length; y++) {
+                    if ( x ==1 && y ==0 ) {
+                        System.out.print(" C =\t[ " + matrizOriginal[x][y] + " ]\t");
+                    }else{
+                        System.out.print("\t[ " + matrizOriginal[x][y] + " ]\t");
+                    }
+                }
+                System.out.println();
+            }
+
+            System.out.print("\n Seleccione UNA FILA para sacar la Determinante: ");
+            selecFilaAdj = sc.nextInt();
+
+            // SI LA OPCION ES CORRECTA ROMPE EL BUCLE WHILE sino sigue 
+            if ( (selecFilaAdj >= 1) && (selecFilaAdj <= matrizOriginal.length ) ) {
+                sc.close();     // cierro el scanner pq sino me tira una advertencia
+                selecFilaAdj--;     // resto 1 pq si ingresa 1, en realidad está eligiendo la fila 0, y así..
+                break;
+            }
+        }
+        
         int[]filaAdj = new int[matrizOriginal.length];
         System.out.println();
         
@@ -142,3 +165,5 @@ public class SacarDeterminanteMatriz {
     }
 
 }
+
+// hecho por Luis Rubin jeje
