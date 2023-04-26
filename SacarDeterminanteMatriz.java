@@ -4,55 +4,77 @@ public class SacarDeterminanteMatriz {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        int[][] matrizOriginal = {
+                                {2,0,3},
+                                {-1,3,5},
+                                {-2,1,4} 
+                                }; // declaramos el arreglo con valores ya definidos
+
+        System.out.println("\n PROGRAMA PARA SACAR LA DETERMINANTE DE UNA MATRIZ 3x3\n");
+        //int[][] matrizOriginal = new int[3][3];     // 3x3
+
         /*
-        int[] notas = {10,5,6,3,8,75}; // declaramos el arreglo con valores ya definidos
-        */
-
-        int matrizOrden = 3;    // 3x3
-
-        int[][] matriz = {  {-1,3,5}, 
-                            {2,1,0}, 
-                            {-9,-8,-4} 
-        };
-        int selecFilaAdj = 1;
-        int[]filaAdj = new int[matrizOrden];
-        System.out.println();
+        // INGRESANDO LA MATRIZ
+        System.out.println(" Ingrese los elementos de la matriz (todo de corrido) ");
+        for (int x = 0; x < matrizOriginal.length; x++) {
+            for (int y = 0; y < matrizOriginal.length; y++) {
+                System.out.print(" -> ");
+                matrizOriginal[x][y] = sc.nextInt();
+            }
+        } */
         
-        for (int y=0; y < matrizOrden; y++){
-            // arreglo de la fila seleccionada para sacar el MC
-            filaAdj[y] = matriz[selecFilaAdj][y];
+        // IMPRIMIENDO LA MATRIZ INGRESADA
+        System.out.println("\n IMPRIMIENDO LA MATRIZ: \n");
+        for (int x = 0; x < matrizOriginal.length; x++) {
+            for (int y = 0; y < matrizOriginal.length; y++) {
+                if ( x ==1 && y ==0 ) {
+                    System.out.print(" C =\t[" + matrizOriginal[x][y] + "]\t");
+                }else{
+                    System.out.print("\t[" + matrizOriginal[x][y] + "]\t");
+                }
+            }
+            System.out.println();
         }
 
-        System.out.println("\nsacando la determinante de una matriz (sin ser traspuesta)");
-        System.out.println("    [-1] [ 3] [ 5]\n C= [ 2] [ 1] [ 0]\n    [-9] [-8] [-4]");
-        System.out.println( " DETERMINANTE DE LA MATRIZ ==> " + Determinantes(matriz, filaAdj,selecFilaAdj) );
+        System.out.print("\n Seleccione una FILA para sacar la Determinante: ");
+        int selecFilaAdj = sc.nextInt()-1;
+        sc.close();     // cierro el scanner pq sino me tira una advertencia
+
+        int[]filaAdj = new int[matrizOriginal.length];
+        System.out.println();
+        
+        for (int y=0; y < matrizOriginal.length; y++){
+            // arreglo de la fila seleccionada para sacar el MC
+            filaAdj[y] = matrizOriginal[selecFilaAdj][y];
+        }
+
+        //System.out.println("    [-1] [ 3] [ 5]\n C= [ 2] [ 1] [ 0]\n    [-9] [-8] [-4]");
+        System.out.println( " |C| = " + Determinantes(matrizOriginal, filaAdj,selecFilaAdj) +"\n" );
     }
 
+
+
+    // =====================================================================================
 
     public static int Determinantes(int [][]matrizMayor, int[] filaSelect, int subXAdj){
         // funcion para hacer las operaciones de determinante (2 x Adj21  +  3 x Adj22  +  1 x Adj23)
         
         int [] adjuntas = new int[filaSelect.length];
 
-        int f=0;
-        for (int i=0; i<filaSelect.length; i++) {
-            if (filaSelect[i] != 0){
-                // si el elemento guardado es 0 ignora toda la operación (0 x Adj23)
-                adjuntas[f] = menorComplen(matrizMayor, subXAdj, i);
-                f++;
-            }
+        for (int i=0; i < filaSelect.length; i++) {
+            adjuntas[i] = menorComplen(matrizMayor, subXAdj, i);
         }
-        int sum=0;
-        for (int i=0; i<adjuntas.length; i++) {
+        int sumAdj=0;
+        for (int i=0; i < adjuntas.length; i++) {
             // aca multiplica todos los elementos de la fila Adj por su menor complem
-            sum += (adjuntas[i] * filaSelect[i] );
+            sumAdj += (adjuntas[i] * filaSelect[i] );
         }
 
-        return sum;
+        return sumAdj;
     }
 
 
-
+    // =====================================================================================
 
     // retorna una matriz de tipo entero 
     //public static int[][] matrices
@@ -80,16 +102,6 @@ public class SacarDeterminanteMatriz {
         int diagPrinc[] = new int [2];
         int diagSec[] = new int [2];
 
-
-        //3333333333333333333333
-        // for (int index = 0; index < matrizReturn.length; index++) {
-        //     for (int index2 = 0; index2 < matrizReturn.length; index2++) {
-        //         System.out.print(matrizReturn[index][index2]+",");
-        //     }
-        //     System.out.println();
-        // }
-        //3333333333333333333333
-
         for (int i=0; i < matrizReturn.length -1; i++) {
             // guardando la diagonal PRINCIPAL
             for (int j=0; j < matrizReturn.length -1; j++) {
@@ -112,23 +124,18 @@ public class SacarDeterminanteMatriz {
 
         int mult1=1, mult2=1;
 
-        // multiplica todos los elementos de la diagonal Principal
         for (int i : diagPrinc) {
+            // multiplica todos los elementos de la diagonal Principal
             mult1 *= i;
         }
-
-        // multiplica todos los elementos de la diagonal Secundaria
         for (int j : diagSec) {
+            // multiplica todos los elementos de la diagonal Secundaria
             mult2 *= j;
         }
 
         int resultDiagonales = (mult1) - (mult2);
-        //System.out.println("resultado MUL1 MUL2: "+mult1+" - "+mult2);
         //              (-1)^3 * MC
         double A = Math.pow( -1, ((subXAdj+1) + (subYAdj+1)) ) * resultDiagonales;
-        //System.out.println("resultado diagonales: "+resultDiagonales);
-        //System.out.println(": (-1)^"+ ((subXAdj+1) + (subYAdj+1)) + " x "+resultDiagonales);
-        //System.out.println("RESULTADO FINAL ADJ: "+ (int) A);
 
         // pasar double to int =>  (int) A;
         return (int) A;
