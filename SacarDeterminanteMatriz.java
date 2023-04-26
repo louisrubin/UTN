@@ -15,22 +15,42 @@ public class SacarDeterminanteMatriz {
                             {-9,-8,-4} 
         };
         int selecFilaAdj = 1;
-        int subColumAdj = 0;
         int[]filaAdj = new int[matrizOrden];
-
         System.out.println();
         
-
         for (int y=0; y < matrizOrden; y++){
             // arreglo de la fila seleccionada para sacar el MC
             filaAdj[y] = matriz[selecFilaAdj][y];
         }
 
-        System.out.print("sacando la determinante de una matriz (sin ser traspuesta)");
-
-        // primero recorro la fila seleccionada para sacar adjunta
-        System.out.println( menorComplen(matriz, selecFilaAdj, subColumAdj) );
+        System.out.println("\nsacando la determinante de una matriz (sin ser traspuesta)");
+        System.out.println("    [-1] [ 3] [ 5]\n C= [ 2] [ 1] [ 0]\n    [-9] [-8] [-4]");
+        System.out.println( " DETERMINANTE DE LA MATRIZ ==> " + Determinantes(matriz, filaAdj,selecFilaAdj) );
     }
+
+
+    public static int Determinantes(int [][]matrizMayor, int[] filaSelect, int subXAdj){
+        // funcion para hacer las operaciones de determinante (2 x Adj21  +  3 x Adj22  +  1 x Adj23)
+        
+        int [] adjuntas = new int[filaSelect.length];
+
+        int f=0;
+        for (int i=0; i<filaSelect.length; i++) {
+            if (filaSelect[i] != 0){
+                // si el elemento guardado es 0 ignora toda la operación (0 x Adj23)
+                adjuntas[f] = menorComplen(matrizMayor, subXAdj, i);
+                f++;
+            }
+        }
+        int sum=0;
+        for (int i=0; i<adjuntas.length; i++) {
+            // aca multiplica todos los elementos de la fila Adj por su menor complem
+            sum += (adjuntas[i] * filaSelect[i] );
+        }
+
+        return sum;
+    }
+
 
 
 
@@ -44,8 +64,7 @@ public class SacarDeterminanteMatriz {
         int fil=0, col=0;
         for (int x=0; x < matriz.length; x++){
             for (int y=0; y < matriz.length; y++){
-                //
-                if( (x != subXAdj) && (y != subYAdj ) ){    // aca ignora las filas y colum para el MC
+                if(  (x != subXAdj)   &&   (y != subYAdj ) ){    // aca ignora las filas y colum para el MC
                     matrizReturn[fil][col] = matriz[x][y];
                     col++;
                     if (col == matriz.length-1) {
@@ -54,9 +73,10 @@ public class SacarDeterminanteMatriz {
                     }
                 }
             }
-            System.out.println();
         }
+        
 
+        // 2 matrices para guardar las diagonales, princ y secund
         int diagPrinc[] = new int [2];
         int diagSec[] = new int [2];
 
@@ -71,7 +91,7 @@ public class SacarDeterminanteMatriz {
         //3333333333333333333333
 
         for (int i=0; i < matrizReturn.length -1; i++) {
-            // diagonal principal
+            // guardando la diagonal PRINCIPAL
             for (int j=0; j < matrizReturn.length -1; j++) {
                 if (i == j) {
                     diagPrinc[i] = matrizReturn[i][j];
@@ -81,7 +101,7 @@ public class SacarDeterminanteMatriz {
 
         int k = 0;
         for (int i = matrizReturn.length -2; i >= 0; i--) {
-            // diagonal secundaria
+            // guardando la diagonal SECUNDARIA
             for (int j = matrizReturn.length -2; j >=0; j--) {
                 if (i != j) {
                     diagSec[k] = matrizReturn[i][j];
@@ -103,12 +123,12 @@ public class SacarDeterminanteMatriz {
         }
 
         int resultDiagonales = (mult1) - (mult2);
-        System.out.println("resultado MUL1 MUL2: "+mult1+" - "+mult2);
+        //System.out.println("resultado MUL1 MUL2: "+mult1+" - "+mult2);
         //              (-1)^3 * MC
         double A = Math.pow( -1, ((subXAdj+1) + (subYAdj+1)) ) * resultDiagonales;
-        System.out.println("resultado diagonales: "+resultDiagonales);
-        System.out.println(": (-1)^"+ ((subXAdj+1) + (subYAdj+1)) + " x "+resultDiagonales);
-        System.out.println("RESULTADO FINAL ADJ: "+ (int) A);
+        //System.out.println("resultado diagonales: "+resultDiagonales);
+        //System.out.println(": (-1)^"+ ((subXAdj+1) + (subYAdj+1)) + " x "+resultDiagonales);
+        //System.out.println("RESULTADO FINAL ADJ: "+ (int) A);
 
         // pasar double to int =>  (int) A;
         return (int) A;
