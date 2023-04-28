@@ -2,30 +2,30 @@ package MatrizInversa;
 import java.util.Scanner;
 
 public class Menu {
-
-    public static int [][] MenuPrincipal(){
-
+    // NO 'static' PORQUE TIRA WARNING: 'should be accessed in a static way' 
+    // cuando lo invoco en otro archivo
+    public int [][] menuPrincipal(){
         Scanner sc = new Scanner(System.in);
 
-        int[][] matrizDefault = {   // declaramos la matriz por defecto y tamaño (3x3)
-                                {1,4,7},
-                                {2,5,8},
-                                {3,6,9} 
+        final int[][] matrizDefault = {   // declaramos la matriz por defecto y tamaño (3x3)
+                                {2,0,3},
+                                {-1,3,5},
+                                {-2,1,4} 
                                 }; 
 
-        int [][] matrizReturn;    // matriz sin definir tamaño, solo inicializada
+        final int [][] matrizReturn;    // matriz sin definir tamaño, solo inicializada
 
         System.out.println("\n PROGRAMA PARA OBTENER UNA MATRIZ INVERSA 3x3\n");
 
-        // VALIDANDO OPCION
         int opc=0;
         while (opc != 1 && opc != 2) {
+            // VALIDANDO OPCION INGRESADA
             System.out.print("  [1] -> Cargar matriz manualmente \n  [2] -> Usar una por defecto\n      -> ");
             opc = sc.nextInt();
             System.out.println();
         }
 
-        // 
+        // VERIFICANDO OPCION
         if (opc == 1) {
             matrizReturn = new int[3][3];     // 3x3
             // CARGANDO LA MATRIZ
@@ -36,11 +36,12 @@ public class Menu {
                     matrizReturn[x][y] = sc.nextInt();
                 }
             } 
-        } else {    // opc == 2
+
+        } else  {    // opc == 2
             matrizReturn = matrizDefault;     // la matriz a utilizar será la default
         }
 
-        // IMPRIMIENDO LA MATRIZ INGRESADA
+        // IMPRIMIENDO LA MATRIZ DEFINIDA
         System.out.println("\n IMPRIMIENDO LA MATRIZ: \n");
         for (int x = 0; x < matrizReturn.length; x++) {
             for (int y = 0; y < matrizReturn.length; y++) {
@@ -52,8 +53,6 @@ public class Menu {
             }
             System.out.println();
         }
-
-
 
         sc.close();     // cierro Scanner
         System.out.println();

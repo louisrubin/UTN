@@ -4,7 +4,7 @@ public class DeterminanteMatriz {
 
     // =====================================================================================
 
-    public static int Determinante(int [][]matrizMayor, int filaSelect){
+    public int determinante(int [][]matrizMayor, int filaSelect){
         // funcion para hacer las operaciones de determinante (2 x Adj21  +  3 x Adj22  +  1 x Adj23)
 
 
@@ -24,14 +24,14 @@ public class DeterminanteMatriz {
 
         // FOR PARA SACAR MENOR COMPLEMENTARIO DE CADA ELEM DE LA FILA SELECT
         for (int i=0; i < matrizMayor.length; i++) {
-            resultAdj[i] = MenorComplementario(matrizMayor, filaSelect, i);
+            resultAdj[i] = menorComplementario(matrizMayor, filaSelect, i);
         }
 
         int Determinante=0;
         for (int i=0; i < matrizMayor.length; i++) {
             // multiplica todos los elem de la ecuacionesAdj por su menor complem
             //      2x5 + 5x23 + (-2)x6
-            Determinante += (resultAdj[i] * filaAdj[i] );
+            Determinante += (filaAdj[i] * resultAdj[i]);
         }
 
         return Determinante;
@@ -45,16 +45,17 @@ public class DeterminanteMatriz {
 
 
     // retorna una matriz de tipo entero
-    public static int MenorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
+    public static int menorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
         
-        int[][] matrizCopia = new int[matrizParam.length][matrizParam.length];   // matriz cuadrada (menor complem)
+        // MATRIZ QUE ALMACENA LOS ELEMENTOS DEL MENOR COMPLEMENTARIO (FILAS Y COLUM IGNORADAS)
+        int[][] matrizMC = new int[matrizParam.length][matrizParam.length];
 
-        // estos 2 for es para imprimir toda la matrizParam, pero con el IF ignora la fila y colum para sacar M.C
+        // estos 2 for, pero con el IF ignora la fila y colum para sacar M.C
         int fil=0, col=0;
         for (int x=0; x < matrizParam.length; x++){
             for (int y=0; y < matrizParam.length; y++){
                 if(  (x != subXAdj)   &&   (y != subYAdj ) ){    // aca ignora las filas y colum para el MC
-                    matrizCopia[fil][col] = matrizParam[x][y];
+                    matrizMC[fil][col] = matrizParam[x][y];
                     col++;
                     if (col == matrizParam.length-1) {
                         col=0;
@@ -73,7 +74,7 @@ public class DeterminanteMatriz {
             // guardando la diagonal PRINCIPAL
             for (int j=0; j < matrizParam.length -1; j++) {
                 if (i == j) {
-                    diagPrinc[i] = matrizParam[i][j];
+                    diagPrinc[i] = matrizMC[i][j];
                 }
             }
         }
@@ -83,7 +84,7 @@ public class DeterminanteMatriz {
             // guardando la diagonal SECUNDARIA
             for (int j = matrizParam.length -2; j >=0; j--) {
                 if (i != j) {
-                    diagSec[k] = matrizParam[i][j];
+                    diagSec[k] = matrizMC[i][j];
                 }
             }
             k++;
