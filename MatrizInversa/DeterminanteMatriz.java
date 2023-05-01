@@ -1,7 +1,6 @@
 package MatrizInversa;
 
 public class DeterminanteMatriz {
-
     // =====================================================================================
 
     public int determinante(int [][]matrizMayor, int filaSelect){
@@ -27,14 +26,14 @@ public class DeterminanteMatriz {
             resultAdj[i] = menorComplementario(matrizMayor, filaSelect, i);
         }
 
-        int Determinante=0;
+        int Deter =0;
         for (int i=0; i < matrizMayor.length; i++) {
             // multiplica todos los elem de la ecuacionesAdj por su menor complem
             //      2x5 + 5x23 + (-2)x6
-            Determinante += (filaAdj[i] * resultAdj[i]);
+            Deter += (filaAdj[i] * resultAdj[i]);
         }
 
-        return Determinante;
+        return Deter;
     }
 
 
@@ -45,7 +44,7 @@ public class DeterminanteMatriz {
 
 
     // retorna una matriz de tipo entero
-    public static int menorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
+    public int menorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
         
         // MATRIZ QUE ALMACENA LOS ELEMENTOS DEL MENOR COMPLEMENTARIO (FILAS Y COLUM IGNORADAS)
         int[][] matrizMC = new int[matrizParam.length][matrizParam.length];
@@ -107,5 +106,62 @@ public class DeterminanteMatriz {
 
         // pasar double to int =>  (int) A;
         return (int) A;
+    }
+
+    
+    // =====================================================================================
+
+    
+
+    public int[][] matrizTraspuesta(int[][] MatrizOriginal) {
+        // funcion que hace la traspuesta de una matriz
+        int[][] matrizReturn = new int[MatrizOriginal.length][MatrizOriginal.length];
+
+        for (int i = 0; i < MatrizOriginal.length; i++) {
+            for (int j = 0; j < MatrizOriginal.length; j++) {
+                matrizReturn[j][i] = MatrizOriginal[i][j];
+            }
+        }
+        return matrizReturn;
+    }
+
+    
+    // =====================================================================================
+
+    
+    public void imprimirMat(int[][] matParam, String nombreMat, boolean esTrasp) {
+        // funcion que imprime una matriz cualquiera ENTERA
+
+        System.out.println("\n IMPRIMIENDO MATRIZ "+ nombreMat.toUpperCase() + ":\n");
+        for (int x = 0; x < matParam.length; x++) {
+            for (int y = 0; y < matParam.length; y++) {
+                if ( x ==1 && y ==0 ) {
+                    if (esTrasp) {
+                        System.out.print(" C.T " + "=\t[ " + matParam[x][y] + " ]\t");                        
+                    } else {
+                        System.out.print(" C " + "=\t[ " + matParam[x][y] + " ]\t");
+                    }
+                }else{
+                    System.out.print("\t[ " + matParam[x][y] + " ]\t");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void imprimirMatInversa(String[][] matParam, int determ) {
+        // funcion que imprime una matriz cualquiera ENTERA
+
+        System.out.println("\n IMPRIMIENDO MATRIZ "+ "INVERSA" + ":\n");
+        for (int x = 0; x < matParam.length; x++) {
+            for (int y = 0; y < matParam.length; y++) {
+                if ( x ==1 && y ==0 ) {
+                        System.out.print(" C-1 " + "=\t[ " + matParam[x][y] + "/" + determ + " ]\t");
+                }else{
+                    System.out.print("\t[ " + matParam[x][y] + "/" + determ + " ]\t");
+                }
+            }
+            System.out.println();
+        }
     }
 }

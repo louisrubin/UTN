@@ -5,12 +5,13 @@ public class Menu {
     // NO 'static' PORQUE TIRA WARNING: 'should be accessed in a static way' 
     // cuando lo invoco en otro archivo
     public int [][] menuPrincipal(){
+        DeterminanteMatriz deterMat = new DeterminanteMatriz();
         Scanner sc = new Scanner(System.in);
 
         final int[][] matrizDefault = {   // declaramos la matriz por defecto y tamaño (3x3)
-                                {2,0,3},
-                                {-1,3,5},
-                                {-2,1,4} 
+                                {3,-4},
+                                {2,5},
+                                //{-2,1,4} 
                                 }; 
 
         final int [][] matrizReturn;    // matriz sin definir tamaño, solo inicializada
@@ -42,17 +43,7 @@ public class Menu {
         }
 
         // IMPRIMIENDO LA MATRIZ DEFINIDA
-        System.out.println("\n IMPRIMIENDO LA MATRIZ: \n");
-        for (int x = 0; x < matrizReturn.length; x++) {
-            for (int y = 0; y < matrizReturn.length; y++) {
-                if ( x ==1 && y ==0 ) {
-                    System.out.print(" C =\t[ " + matrizReturn[x][y] + " ]\t");
-                }else{
-                    System.out.print("\t[ " + matrizReturn[x][y] + " ]\t");
-                }
-            }
-            System.out.println();
-        }
+        deterMat.imprimirMat(matrizReturn, "inicial", false);
 
         sc.close();     // cierro Scanner
         System.out.println();
