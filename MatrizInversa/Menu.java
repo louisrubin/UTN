@@ -5,7 +5,7 @@ public class Menu {
     // NO 'static' PORQUE TIRA WARNING: 'should be accessed in a static way' 
     // cuando lo invoco en otro archivo
     public int [][] menuPrincipal(){
-        DeterminanteMatriz deterMat = new DeterminanteMatriz();
+        Funciones deterMat = new Funciones();
         Scanner sc = new Scanner(System.in);
 
         final int[][] matrizDefault = {   // declaramos la matriz por defecto y tamaño (3x3)
