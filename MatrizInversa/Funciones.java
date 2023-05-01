@@ -1,9 +1,10 @@
 package MatrizInversa;
+import java.util.Scanner;;
 
 public class Funciones {
     // =====================================================================================
 
-    public int determinante(int [][]matrizMayor, int filaSelect){
+    public static int determinante(int [][]matrizMayor, int filaSelect){
         // funcion para hacer las operaciones de determinante (2 x Adj21  +  3 x Adj22  +  1 x Adj23)
 
 
@@ -44,7 +45,7 @@ public class Funciones {
 
 
     // retorna una matriz de tipo entero
-    public int menorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
+    public static int menorComplementario(int[][] matrizParam, int subXAdj, int subYAdj){
         
         // MATRIZ QUE ALMACENA LOS ELEMENTOS DEL MENOR COMPLEMENTARIO (FILAS Y COLUM IGNORADAS)
         int[][] matrizMC = new int[matrizParam.length][matrizParam.length];
@@ -112,7 +113,7 @@ public class Funciones {
 
     
 
-    public int[][] matrizTraspuesta(int[][] MatrizOriginal) {
+    public static int[][] matrizTraspuesta(int[][] MatrizOriginal) {
         // funcion que hace la traspuesta de una matriz
         int[][] matrizReturn = new int[MatrizOriginal.length][MatrizOriginal.length];
 
@@ -127,7 +128,26 @@ public class Funciones {
     
     // =====================================================================================
 
-    public int[] simpliFrac(int num1, int num2) {
+    
+    public static int[][] cargarMatriz(int[][] matParam) {
+        // FUNCION PARA CARGA DE MATRIZ
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println(" Ingrese los elementos de la matriz (todo de corrido) ");
+            for (int x = 0; x < matParam.length; x++) {
+                for (int y = 0; y < matParam.length; y++) {
+                    System.out.print(" -> ");
+                    matParam[x][y] = sc.nextInt();
+                }
+            } 
+        sc.close();     // cierro Scanner
+        return matParam;
+    }
+
+    
+    // =====================================================================================
+
+    public static int[] simpliFrac(int num1, int num2) {
         //  FUNCION PARA SIMPLIFICAR UNA FRACCION
         int menor = num1;
         int mayor = num2;
@@ -169,7 +189,7 @@ public class Funciones {
 
     
 
-    public void imprimirMatInversa(int[][] matParam, int determ) {
+    public static void imprimirMatInversa(int[][] matParam, int determ) {
         // funcion que imprime una matriz cualquiera ENTERA
 
         int[] elemSimpl;
@@ -210,7 +230,7 @@ public class Funciones {
     // =====================================================================================
 
     
-    public void imprimirMat(int[][] matParam, String nombreMat, boolean esTrasp) {
+    public static void imprimirMat(int[][] matParam, String nombreMat, boolean esTrasp) {
         // funcion que imprime una matriz cualquiera ENTERA
 
         System.out.println("\n IMPRIMIENDO MATRIZ "+ nombreMat.toUpperCase() + ":\n");
