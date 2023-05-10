@@ -179,8 +179,11 @@ public class Funciones {
                 }
             }
         }
-        // verificar si el denominador es (1) o (-1), ignorarlo.
-        // y si el denominador ingresado es 0, es una fracción incorrecta
+        if (arrSimpl[0] > 0 && arrSimpl[1] == (-1) ) {
+            // cambiar: si el numera posit y denom negat, coloca el signo arriba
+            arrSimpl[0] *= (-1);
+            arrSimpl[1] *= (-1);
+        }
         return arrSimpl;
     }
 
@@ -190,7 +193,8 @@ public class Funciones {
     
 
     public static void imprimirMatInversa(int[][] matParam, int determ) {
-        // funcion que imprime una matriz cualquiera ENTERA
+        /* funcion que imprime la matriz ya simplificada, pq no imprime corchetes y 
+        tambien porque si el denominador es 1 solo imprime el numerador */
 
         int[] elemSimpl;
         int numera, denom;
@@ -206,8 +210,8 @@ public class Funciones {
                 String txtNormal = "\t " + numera + "/" + denom + " \t";
                 String txtSimplf = "\t  " + numera + " \t";
 
-                if ( denom == 1 || denom == -1 ){
-                    // si el denom es 1 imprime mensaje sin "determ"
+                if ( denom == 1 ){
+                    // si el denominador es 1 imprime el numerador solito
                     if ( x ==1 && y == 0 ) {
                         System.out.print(" C-1 " + txtSimplf);
                     }else{
@@ -219,7 +223,6 @@ public class Funciones {
                     }else{
                         System.out.print(txtNormal);
                     }
-
                 }
             }
             System.out.println();
