@@ -16,7 +16,7 @@ struct Alumno {
 int main() {
 	FILE *arch;
 	struct Alumno alumns;
-
+	
 	arch = fopen(ARCH, "wb");
 	int p=0;
 	char seg = 'n';	
@@ -40,5 +40,6 @@ int main() {
 	}while(seg=='n' && p < TAM);
 	
 	fclose(arch);
+	printf("\n Archivo cerrado.");
 	return 0;
 }
