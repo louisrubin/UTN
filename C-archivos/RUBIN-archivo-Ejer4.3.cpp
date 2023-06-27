@@ -28,8 +28,11 @@ int main() {
 		scanf("%s",&alumns.nombre); 
 		printf(" Ingrese apellido: "); 
 		scanf("%s",&alumns.apellido); 
-		printf(" Ingrese nota: ");
-		scanf("%f",&alumns.nota); 
+		do{
+			printf(" Ingrese nota: ");
+			scanf("%f",&alumns.nota);
+		} while ( alumns.nota < 0 || alumns.nota > 10);
+		 
 		fwrite( &alumns, sizeof(alumns), 1, arch); /* function para escribir en el archivo */
 		
 		p++;		
